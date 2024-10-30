@@ -99,7 +99,7 @@ If nil, scratch buffer is not saved."
   "Return non-nil if the *scratch* buffer is not to be saved.
 TEXT is contents of the *scratch* buffer."
   (or (string-match-p scratch-ext-text-ignore-regexp text)
-      (string= text (or initial-scratch-message ""))))
+      (string= text (or (substitute-command-keys initial-scratch-message) ""))))
 
 (defun scratch-ext--clear-scratch ()
   "Clear the *scratch* buffer."
@@ -112,7 +112,7 @@ TEXT is contents of the *scratch* buffer."
     (funcall initial-major-mode)
     (erase-buffer)
     (when initial-scratch-message
-      (insert initial-scratch-message))))
+      (insert (substitute-command-keys initial-scratch-message)))))
 
 (defun scratch-ext-kill-buffer-query-function ()
   "If the current buffer is the *scratch* buffer, save and clear it."
